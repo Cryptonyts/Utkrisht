@@ -3,84 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Template</title>
+    <title>Parallax Scrolling Example</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="logo">LOGO</div>
+    <div class="navbar">
+        <a href="index.html" class="logo">
+            <img src="logoo.png" alt="Website Logo">
+        </a>
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Edu</a></li>
-            <li><a href="#">Games</a></li>
-            <li><a href="#">About</a></li>
+            <li><a href="#frame1">HOME</a></li>
+            <li><a href="#frame2">Translate</a></li>
+            <li><a href="#frame3">Flashcards</a></li>
+            <li><a href="#frame4">Summary</a></li>
+            <li><a href="#frame5">Accent</a></li>
         </ul>
-    </nav>
+    </div>
 
-    <!-- Section 1 - Upload -->
-    <section class="section" id="section1">
+    <!-- Parallax Frame 1 -->
+    <section class="parallax" id="frame1">
         <div class="content">
-            <input type="file" id="upload">
-            <button id="goButton1">Go</button>
+            <h1>edu</h1>
+            <p>Some introductory text.</p>
         </div>
     </section>
 
-    <!-- Section 2 - Translation -->
-    <section class="section" id="section2">
+    <!-- Frame Bar (separating different frames) -->
+    <div class="frame-bar">Translation Section</div>
+
+    <!-- Parallax Frame 2 -->
+    <section class="parallax" id="frame2">
         <div class="content">
-            <h2>Translation</h2>
-            <select name="lang" id="langSelect1">
-                <option value="en">English</option>
-                <option value="es">Spanish</option>
-                <!-- Add more languages here -->
-            </select>
-            <button id="goButton2">Go</button>
+            <h1> TRANSLATION </h1>
+            <p>More information here.</p>
         </div>
     </section>
 
-    <!-- Section 3 - Flashcards -->
-    <section class="section" id="section3">
+    <!-- Frame Bar -->
+    <div class="frame-bar">Flashcards Section</div>
+
+    <!-- Parallax Frame 3 -->
+    <section class="parallax" id="frame3">
         <div class="content">
-            <h2>Flashcards</h2>
-            <select name="lang" id="langSelect2">
-                <option value="en">English</option>
-                <option value="es">Spanish</option>
-                <!-- Add more languages here -->
-            </select>
-            <button id="goButton3">Generate</button>
+            <h1> GENERATE FLASHCARDS</h1>
+            <p>Details about our services.</p>
         </div>
     </section>
 
-    <!-- Section 4 - Summary -->
-    <section class="section" id="section4">
+    <!-- Frame Bar -->
+    <div class="frame-bar">Summary Section</div>
+
+    <!-- Parallax Frame 4 -->
+    <section class="parallax" id="frame4">
         <div class="content">
-            <h2>Summary</h2>
-            <select name="lang" id="langSelect3">
-                <option value="en">English</option>
-                <option value="es">Spanish</option>
-                <!-- Add more languages here -->
-            </select>
-            <button id="goButton4">Go</button>
+            <h1>CREATE SUMMARY</h1>
+            <p>Contact information or call to action.</p>
         </div>
     </section>
 
-    <!-- Section 5 - Accent -->
-    <section class="section" id="section5">
+    <!-- Parallax Frame 5 -->
+    <section class="parallax" id="frame5">
         <div class="content">
-            <h2>Accent</h2>
-            <select name="lang" id="langSelect4">
-                <option value="en">English</option>
-                <option value="es">Spanish</option>
-                <!-- Add more languages here -->
-            </select>
-            <button id="goButton5">Go</button>
+            <h1>ACCENT</h1>
+            <p>Contact information or call to action.</p>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <p>GitHub links of teammates</p>
-    </footer>
+    <div class="footer">
+        <p>GitHub links of team mates: <a href="#">Link 1</a>, <a href="#">Link 2</a>, <a href="#">Link 3</a></p>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
