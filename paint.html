@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paint Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #sidebar {
+            width: 200px;
+            background-color: #f4f4f4;
+            padding: 15px;
+            height: 100vh;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            transition: background-color 0.3s;
+        }
+
+        #canvas-container {
+            margin-left: 220px;
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        #canvas {
+            border: 1px solid #000;
+            margin-top: 20px;
+            cursor: crosshair;
+        }
+
+        .tool-section {
+            margin-bottom: 20px;
+        }
+
+        .tool-section label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .color-picker {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+        }
+
+        #size-slider {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .fab {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .fab:hover {
+            background-color: #0056b3;
+        }
+
+        /* Light mode styles */
+        body.light-mode {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        #sidebar.light-mode {
+            background-color: #f4f4f4;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        #sidebar.dark-mode {
+            background-color: #333333;
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <div id="sidebar" class="light-mode">
+        <div class="tool-section">
+            <label>Shapes</label>
+            <div>
+                <input type="radio" name="shape" value="rectangle" id="rectangle" checked> Rectangle<br>
+                <input type="radio" name="shape" value="circle" id="circle"> Circle<br>
+                <input type="radio" name="shape" value="triangle" id="triangle"> Triangle<br>
+                <input type="radio" name="shape" value="brush" id="brush"> Brush<br>
+                <input type="radio" name="shape" value="eraser" id="eraser"> Eraser
+            </div>
+        </div>
+        <div class="tool-section">
+            <label for="size-slider">Brush Size</label>
+            <input type="range" id="size-slider" min="1" max="20" value="5">
+        </div>
+        <div class="tool-section">
+            <label>Colors</label>
+            <div>
+                <button class="color-picker" style="background-color: black;" data-color="#000000"></button>
+                <button class="color-picker" style="background-color: red;" data-color="#FF0000"></button>
+                <button class="color-picker" style="background-color: green;" data-color="#00FF00"></button>
+                <button class="color-picker" style="background-color: blue;" data-color="#0000FF"></button>
+                <button class="color-picker" style="background-color: yellow;" data-color="#FFFF00"></button>
+                <button class="color-picker" style="background-color: orange;" data-color="#FFA500"></button>
+                <button class="color-picker" style="background-color: pink;" data-color="#FFC0CB"></button>
+                <button class="color-picker" style="background-color: gray;" data-color="#808080"></button>
+                <button class="color-picker" style="background-color: white;" data-color="#FFFFFF"></button>
+            </div>
+        </div>
+        <button onclick="clearCanvas()">Clear Canvas</button>
+        <button onclick="saveImage()">Save as Image</button>
+    </div>
+    
+    <div id="canvas-container">
+        <canvas id="canvas" width="800" height="600"></canvas>
+    </div>
+
+    <!-- Floating Action Button (FAB) for Theme Switch -->
+    <button class="fab" onclick="toggleTheme()">🌓</button>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+        let shape = 'brush';
+        let currentColor = '#000000';
+        let brushSize = 5;
+        let startX, startY;
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function saveImage() {
+            const link = document.createElement('a');
+            link.download = 'canvas.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        document.querySelectorAll('input[name="shape"]').forEach(input => {
+            input.addEventListener('change', () => {
+                shape = input.value;
+            });
+        });
+
+        document.querySelectorAll('.color-picker').forEach(button => {
+            button.addEventListener('click', () => {
+                currentColor = button.getAttribute('data-color');
+                ctx.strokeStyle = currentColor;
+                ctx.fillStyle = currentColor;
+            });
+        });
+
+        document.getElementById('size-slider').addEventListener('input', function() {
+            brushSize = this.value;
+            ctx.lineWidth = brushSize;
+        });
+
+        canvas.addEventListener('mousedown', (e) => {
+            drawing = true;
+            startX = e.offsetX;
+            startY = e.offsetY;
+            if (shape === 'brush' || shape === 'eraser') {
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!drawing) return;
+            const endX = e.offsetX;
+            const endY = e.offsetY;
+            
+            if (shape !== 'brush' && shape !== 'eraser') {
+                clearCanvas();
+                redrawShapes();
+            }
+            
+            if (shape === 'rectangle') {
+                ctx.strokeRect(startX, startY, endX - startX, endY - startY);
+            } else if (shape === 'circle') {
+                const radius = Math.hypot(endX - startX, endY - startY);
+                ctx.beginPath();
+                ctx.arc(startX, startY, radius, 0, Math.PI * 2);
+                ctx.stroke();
+            } else if (shape === 'triangle') {
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(endX, endY);
+                ctx.lineTo(startX - (endX - startX), endY);
+                ctx.closePath();
+                ctx.stroke();
+            } else if (shape === 'brush') {
+                ctx.lineTo(endX, endY);
+                ctx.stroke();
+            } else if (shape === 'eraser') {
+                ctx.clearRect(endX, endY, brushSize, brushSize);
+            }
+        });
+
+        canvas.addEventListener('mouseup', (e) => {
+            drawing = false;
+            const endX = e.offsetX;
+            const endY = e.offsetY;
+            
+            if (shape === 'rectangle') {
+                ctx.strokeRect(startX, startY, endX - startX, endY - startY);
+            } else if (shape === 'circle') {
+                const radius = Math.hypot(endX - startX, endY - startY);
+                ctx.beginPath();
+                ctx.arc(startX, startY, radius, 0, Math.PI * 2);
+                ctx.stroke();
+            } else if (shape === 'triangle') {
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(endX, endY);
+                ctx.lineTo(startX - (endX - startX), endY);
+                ctx.closePath();
+                ctx.stroke();
+            }
+        });
+
+        function redrawShapes() {
+            // Placeholder function for redrawing shapes.
+            // Expand this function to store and redraw all shapes.
+        }
+
+        // Theme Toggle Functionality
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            document.getElementById('sidebar').classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
