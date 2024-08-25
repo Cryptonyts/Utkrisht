@@ -40,7 +40,6 @@ body, html {
 
 .navbar .nav-links li a:hover, .navbar .nav-links li a.active {
     color: #76b2da; /* Highlight color */
-    
 }
 
 /* Parallax frames */
@@ -53,23 +52,26 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #100707;
+    color: #ffffff; /* Changed to white for better contrast */
     text-align: center;
     position: relative;
 }
 
 #frame1 {
-    background-image: url('/static/images/home.jpg');
+    background-image: url('/static/images/index.jpg');
 }
 
 #frame2 {
-    background-image: url('/static/images/book.jpg');
+    background-image: url('/static/images/draw.jpg');
 }
 
 .content {
     padding: 20px;
     background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
     border-radius: 10px;
+    opacity: 1; /* Ensure content is visible by default */
+    transform: translateY(0); /* Ensure content is in its default position */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 /* Translucent Containers in Frame 2 */
@@ -132,16 +134,4 @@ body, html {
 
 .footer a:hover {
     text-decoration: underline;
-}
-
-/* Additional CSS for smooth transitions */
-.content {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.in-view {
-    opacity: 1;
-    transform: translateY(0);
 }
