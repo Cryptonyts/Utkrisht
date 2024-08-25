@@ -53,7 +53,7 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgb(16, 7, 7);
+    color: #100707;
     text-align: center;
     position: relative;
 }
@@ -63,9 +63,8 @@ body, html {
 }
 
 #frame2 {
-    background-image: url('/static/images/audio.jpg');
+    background-image: url('/static/images/book.jpg');
 }
-
 
 .content {
     padding: 20px;
@@ -73,16 +72,41 @@ body, html {
     border-radius: 10px;
 }
 
-h1 {
-    font-size: 48px;
-    margin-bottom: 10px;
+/* Translucent Containers in Frame 2 */
+.container-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    width: 80%; /* Slightly reduce width for spacing */
+    margin: 0 auto; /* Center the container-wrapper */
+    gap: 20px; /* Spacing between the containers */
 }
 
-p {
-    font-size: 20px;
+.translucent-container {
+    background: rgba(255, 255, 255, 0.8); /* White background with 80% opacity */
+    border-radius: 15px; /* Rounded corners */
+    padding: 40px;
+    text-align: center;
+    text-decoration: none;
+    color: #333; /* Text color */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    flex: 1; /* Make containers equally sized */
+    max-width: 45%; /* Limit the width of each container */
 }
 
-/* Frame Bar */
+.translucent-container:hover {
+    transform: scale(1.05);
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly more opaque on hover */
+}
+
+.translucent-container h2 {
+    font-size: 28px;
+    margin: 0;
+    color: #007bff; /* Primary color for heading */
+}
+
 .frame-bar {
     background-color: #444;
     color: white;
@@ -90,6 +114,7 @@ p {
     text-align: center;
     font-size: 24px;
     font-weight: bold;
+    margin-top: 0; /* Remove the margin */
 }
 
 /* Footer */

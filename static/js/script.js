@@ -6,12 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-               
                 navLinks.forEach(link => link.classList.remove('active'));
 
-               
                 const activeLink = document.querySelector(`.navbar .nav-links li a[href="#${entry.target.id}"]`);
-                activeLink.classList.add('active');
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
             }
         });
     }, {
