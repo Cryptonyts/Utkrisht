@@ -52,13 +52,39 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ffffff; /* Changed to white for better contrast */
+    color: #ffffff; /* Ensure text color is white for contrast */
     text-align: center;
     position: relative;
 }
 
+/* Frame 1 specific styles */
 #frame1 {
-    background-image: url('/static/images/index.jpg');
+    background-image: url('/static/images/index.jpg'); /* Ensure path is correct */
+    background-color: transparent; /* No additional background color */
+}
+
+#frame1 .content {
+    padding: 0; /* Remove padding to eliminate background container effect */
+    background: none; /* Remove background */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Full height of the parallax section */
+}
+
+/* Text styling */
+.main-heading {
+    font-size: 8em; /* Large text size */
+    font-weight: bold; /* Bold text */
+    margin: 0; /* Remove default margin */
+    color: #319bc2; /* White text color */
+}
+
+.tagline {
+    font-size: 1.5em; /* Smaller than heading but still prominent */
+    color: #153d04; /* White text color */
+    margin-top: 20px; /* Spacing between heading and tagline */
 }
 
 #frame2 {
