@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        
+        #chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #007bff;
+            border-radius: 50%;
+            color: white;
+            text-align: center;
+            line-height: 60px;
+            cursor: pointer;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+        /* Chat window style */
+        #chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+        #chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        #chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+        #chat-input textarea {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            resize: none;
+        }
+        #chat-input button {
+            padding: 10px;
+            border: none;
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="chatbot-icon">Chat</div>
+    <div id="chat-window">
+        <div id="chat-messages"></div>
+        <div id="chat-input">
+            <textarea id="message-input" rows="3" placeholder="Type your message..."></textarea>
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('chatbot-icon').addEventListener('click', function() {
+            var chatWindow = document.getElementById('chat-window');
+            chatWindow.style.display = chatWindow.style.display === 'none' || chatWindow.style.display === '' ? 'flex' : 'none';
+        });
+
+        document.getElementById('send-button').addEventListener('click', function() {
+            var input = document.getElementById('message-input');
+            var message = input.value;
+            if (message.trim()) {
+                addMessage('You: ' + message);
+                input.value = '';
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    addMessage('Bot: ' + data.response);
+                });
+            }
+        });
+
+        function addMessage(message) {
+            var chatMessages = document.getElementById('chat-messages');
+            var messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    </script>
+</body>
+</html>

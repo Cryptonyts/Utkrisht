@@ -1,0 +1,135 @@
+/* Basic reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+/* Navigation Bar */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #252525;
+}
+
+.navbar .logo img {
+    height: 50px; /* Adjust height as needed */
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.navbar .logo img:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar .nav-links li a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navbar .nav-links li a:hover, .navbar .nav-links li a.active {
+    color: #ff9800; /* Highlight color */
+    text-decoration: underline;
+}
+
+/* Parallax frames */
+.parallax {
+    height: 100vh; /* Full screen height */
+    background-attachment: fixed; /* Parallax effect */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(16, 7, 7);
+    text-align: center;
+    position: relative;
+}
+
+#frame1 {
+    background-image: url('/static/images/home.jpg');
+}
+
+#frame2 {
+    background-image: url('/static/images/audio.jpg');
+}
+
+#frame3 {
+    background-image: url('/static/images/flashcards.jpg');
+}
+
+#frame4 {
+
+    background-image: url('/static/images/bookstack.jpg');
+}
+
+#frame5 {
+    
+    background-image: url('/static/images/book.jpg');
+}
+
+.content {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    border-radius: 10px;
+}
+
+h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 20px;
+}
+
+/* Frame Bar */
+.frame-bar {
+    background-color: #444;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Footer */
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.footer a {
+    color: #ff9800;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Additional CSS for smooth transitions */
+.content {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
